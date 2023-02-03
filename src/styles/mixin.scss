@@ -1,0 +1,28 @@
+$containerOnlyValue: 1280;
+
+@mixin adaptiv-value($property, $startSize, $minSize, $type) {
+  $addSize: $startSize - $minSize;
+
+  @if $type==1 {
+    // Меньше контейнера
+    #{$property}: $startSize + px;
+
+    @media (max-width: #{$containerOnlyValue + px}) {
+      #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$containerOnlyValue - 320}));
+    }
+  }
+
+  @if $type==2 {
+    // Больше контейнера
+    #{$property}: $startSize + px;
+
+    @media (min-width: #{$containerOnlyValue + px}) {
+      #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
+    }
+  }
+
+  @if $type==3 {
+    // Всегда
+    #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
+  }
+}
